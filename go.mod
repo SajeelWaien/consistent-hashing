@@ -3,6 +3,7 @@ module github.com/sajeelwaien/consistent-hashing
 go 1.26.2
 
 replace github.com/sajeelwaien/consistent-hashing/bloomfilter => ./BloomFilter
+replace github.com/sajeelwaien/consistent-hashing/node => ./Node
 
 require (
 	github.com/google/uuid v1.6.0

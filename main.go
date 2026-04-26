@@ -1,26 +1,41 @@
 package main
 
+// import (
+// 	"fmt"
+
+// 	"github.com/google/uuid"
+// 	"github.com/sajeelwaien/consistent-hashing/bloomfilter"
+// )
+
+// func main() {
+// 	values := make([]string, 0)
+// 	for i := 0; i < 100; i++ {
+// 		values = append(values, uuid.New().String())
+// 	}
+
+// 	hashFunc := bloomfilter.InitHashFunc(3)
+// 	bf := bloomfilter.NewBloomFilter(50)
+
+// 	for i := 0; i < len(values); i++ {
+// 		bf.Add(values[i], &hashFunc)
+// 	}
+
+// 	bf.Print("test")
+// 	fmt.Println(bf.Contains(uuid.NewString(), &hashFunc))
+// 	fmt.Println(values[5], bf.Contains(values[5], &hashFunc))
+// }
+
 import (
 	"fmt"
 
-	"github.com/google/uuid"
-	"github.com/sajeelwaien/consistent-hashing/bloomfilter"
+	"github.com/sajeelwaien/consistent-hashing/node"
 )
 
 func main() {
-	values := make([]string, 0)
-	for i := 0; i < 100; i++ {
-		values = append(values, uuid.New().String())
-	}
+	cacheNode := node.NewNode("Node1")
 
-	hashFunc := bloomfilter.InitHashFunc(3)
-	bf := bloomfilter.NewBloomFilter(50)
-
-	for i := 0; i < len(values); i++ {
-		bf.Add(values[i], &hashFunc)
-	}
-
-	bf.Print("test")
-	fmt.Println(bf.Contains(uuid.NewString(), &hashFunc))
-	fmt.Println(values[5], bf.Contains(values[5], &hashFunc))
+	fmt.Println(cacheNode.GetID())
+	cacheNode.Set("key1", "value1")
+	cacheNode.Get("key1")
+	cacheNode.Get("key2")
 }
