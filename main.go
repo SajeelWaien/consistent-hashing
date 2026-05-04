@@ -28,14 +28,35 @@ package main
 import (
 	"fmt"
 
+	"github.com/sajeelwaien/consistent-hashing/hashring"
 	"github.com/sajeelwaien/consistent-hashing/node"
 )
 
 func main() {
-	cacheNode := node.NewNode("Node1")
+	cacheNode1 := node.NewNode("Node1")
+	cacheNode2 := node.NewNode("Node2")
+	cacheNode3 := node.NewNode("Node3")
 
-	fmt.Println(cacheNode.GetID())
-	cacheNode.Set("key1", "value1")
-	cacheNode.Get("key1")
-	cacheNode.Get("key2")
+	rf := hashring.WithReplicationFactor(2)
+	vnc := hashring.WithVirtualNodeCount(5)
+	le := hashring.WithLoggingEnabled(true)
+
+	hashRing := hashring.NewHashRing(rf, vnc, le)
+
+	hashRing.AddNode(cacheNode1)
+	hashRing.AddNode(cacheNode2)
+	hashRing.AddNode(cacheNode3)
+
+	ringNode, err := hashRing.GetPrimaryNode("key1")
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Printf("Primary node for key1: %v\n", ringNode.GetID())
+	// for _, node := range ringNodes {
+	// 	fmt.Printf("Node for key1: %v\n", node.GetID())
+	// }
+
+	fmt.Println(cacheNode1.GetID())
+
 }

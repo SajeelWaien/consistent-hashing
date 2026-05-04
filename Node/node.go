@@ -12,6 +12,13 @@ type Node struct {
 	data        sync.Map
 }
 
+type ICacheNode interface {
+	GetID() string
+	Get(key string) (string, error)
+	Set(key string, value string) error
+	Delete(key string) error
+}
+
 var (
 	ErrorNodeNotConnected = errors.New("Node is not connected")
 	ErrorKeyNotFound      = errors.New("Key not found in node")
